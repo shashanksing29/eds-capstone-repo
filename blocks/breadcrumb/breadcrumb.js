@@ -23,7 +23,10 @@ function labelForSegment(segment) {
  * @param {HTMLElement} block The breadcrumb block element
  */
 export default function decorate(block) {
-  const title = getMetadata('og:title') || document.title;
+  // Use the page title, stripping any common " | Site" / " - Site" suffix so
+  // the final crumb reads cleanly (e.g. "About Us" not "About Us | EDS Capstone").
+  const rawTitle = getMetadata('og:title') || document.title || '';
+  const title = rawTitle.split(/\s+[|\-–—]\s+/)[0].trim();
   const { pathname } = window.location;
   const segments = pathname.split('/').filter((s) => s.length && s !== 'index');
 
