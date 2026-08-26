@@ -44,6 +44,13 @@ export default function decorate(block) {
     imageWrapper.className = 'banner-image';
     imageWrapper.append(picture);
     content.append(imageWrapper);
+    // Eager-load the banner image so it never flickers as a broken placeholder,
+    // even when the banner is rendered inside a lazily-loaded fragment.
+    const img = picture.querySelector('img');
+    if (img) {
+      img.setAttribute('loading', 'eager');
+      img.removeAttribute('fetchpriority');
+    }
   }
 
   if (title) {
