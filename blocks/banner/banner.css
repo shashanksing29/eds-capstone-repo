@@ -1,0 +1,45 @@
+.banner {
+  /* default background is blue; authors can override via inline --banner-bg */
+  --banner-default-bg: #3b63fb;
+
+  background-color: var(--banner-bg, var(--banner-default-bg));
+  color: #fff;
+  border-radius: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.banner .banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.banner .banner-image picture,
+.banner .banner-image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.banner .banner-title {
+  margin: 0;
+  color: inherit;
+}
+
+/* dark variant: authored via "banner (dark)" */
+.banner.dark {
+  --banner-default-bg: #131313;
+
+  color: #fff;
+}
+
+@media (width >= 900px) {
+  .banner {
+    padding: 64px 32px;
+  }
+}

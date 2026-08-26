@@ -1,0 +1,10 @@
+{
+  "type": "da",
+  "sites": {
+    "eds-capstone-repo": {
+      "previewOrg": "shashanksing29",
+      "previewSite": "eds-capstone-repo",
+      "contentHostUrl": "https://content.da.live/shashanksing29/eds-capstone-repo/"
+    }
+  }
+}
