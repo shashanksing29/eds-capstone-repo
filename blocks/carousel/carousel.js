@@ -36,10 +36,14 @@ export default function decorate(block) {
     track.append(slide);
   });
 
-  // optimize images
-  track.querySelectorAll('picture > img').forEach((img) => {
+  // optimize images: eagerly load the first (visible) slide for a fast LCP,
+  // lazy-load the rest so off-screen slides don't compete for bandwidth.
+  [...track.querySelectorAll('.carousel-slide')].forEach((slide, i) => {
+    const img = slide.querySelector('picture > img');
+    if (!img) return;
+    const eager = i === 0;
     img.closest('picture').replaceWith(
-      createOptimizedPicture(img.src, img.alt, false, [{ width: '900' }]),
+      createOptimizedPicture(img.src, img.alt, eager, [{ width: '900' }]),
     );
   });
 
