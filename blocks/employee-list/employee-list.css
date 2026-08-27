@@ -1,0 +1,30 @@
+.employee-list .employee-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.employee-list .employee-list-table th,
+.employee-list .employee-list-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--dark-color);
+}
+
+.employee-list .employee-list-table thead th {
+  background-color: var(--light-color);
+  font-weight: 700;
+  border-bottom: 2px solid var(--text-color);
+}
+
+.employee-list .employee-list-table tbody tr:nth-child(even) {
+  background-color: var(--light-color);
+}
+
+.employee-list .employee-list-more {
+  display: inline-block;
+}
+
+.employee-list .employee-list-more[hidden] {
+  display: none;
+}
