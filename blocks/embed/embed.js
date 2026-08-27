@@ -33,9 +33,16 @@ const embedYoutube = (url, autoplay) => {
   if (url.origin.includes('youtu.be')) {
     [, vid] = url.pathname.split('/');
   }
+  // Pass the embedding page origin so YouTube can verify the embedder and
+  // avoid the "Video player configuration error" (Error 153) that occurs when
+  // it cannot resolve the referrer. Use the privacy-enhanced nocookie host.
+  const origin = `&origin=${encodeURIComponent(window.location.origin)}`;
+  const src = vid
+    ? `https://www.youtube-nocookie.com/embed/${vid}?rel=0${origin}${suffix}`
+    : `https://www.youtube-nocookie.com${embed}`;
   const embedHTML = `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-      <iframe src="https://www.youtube.com${vid ? `/embed/${vid}?rel=0${suffix}` : embed}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
-      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Youtube" loading="lazy"></iframe>
+      <iframe src="${src}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" referrerpolicy="strict-origin-when-cross-origin" title="Content from Youtube" loading="lazy"></iframe>
     </div>`;
   return embedHTML;
 };
@@ -58,22 +65,12 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
-const embedVideo = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-    <video controls playsinline preload="metadata" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;">
-      <source src="${url.href}" type="video/mp4">
-    </video>
-  </div>`;
-
 const loadEmbed = (block, link, autoplay) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
   }
 
   const EMBEDS_CONFIG = [
-    {
-      match: ['.mp4'],
-      embed: embedVideo,
-    },
     {
       match: ['youtube', 'youtu.be'],
       embed: embedYoutube,
