@@ -90,6 +90,23 @@ const loadEmbed = (block, link, autoplay) => {
   block.classList.add('embed-is-loaded');
 };
 
+/**
+ * Extract a YouTube video id from a watch/youtu.be/embed URL.
+ * @param {string} href
+ * @returns {string|null}
+ */
+const youtubeId = (href) => {
+  try {
+    const url = new URL(href);
+    if (url.hostname.includes('youtu.be')) return url.pathname.split('/')[1];
+    if (url.searchParams.get('v')) return url.searchParams.get('v');
+    const parts = url.pathname.split('/');
+    const i = parts.findIndex((p) => p === 'embed' || p === 'shorts');
+    if (i >= 0) return parts[i + 1];
+  } catch (e) { /* ignore */ }
+  return null;
+};
+
 export default function decorate(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
@@ -104,13 +121,37 @@ export default function decorate(block) {
       loadEmbed(block, link, true);
     });
     block.append(wrapper);
-  } else {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        observer.disconnect();
-        loadEmbed(block, link);
-      }
-    });
-    observer.observe(block);
+    return;
   }
+
+  // For YouTube, render a thumbnail poster with a play button so a visible
+  // video card always shows (even when a browser blocks auto-loaded iframes),
+  // and only load the player on click.
+  const vid = youtubeId(link);
+  if (vid) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'embed-placeholder';
+    const img = document.createElement('img');
+    img.src = `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`;
+    img.alt = 'Play video';
+    img.loading = 'lazy';
+    const play = document.createElement('div');
+    play.className = 'embed-placeholder-play';
+    play.innerHTML = '<button type="button" title="Play"></button>';
+    wrapper.append(img, play);
+    wrapper.addEventListener('click', () => {
+      loadEmbed(block, link, true);
+    });
+    block.append(wrapper);
+    return;
+  }
+
+  // Non-YouTube (e.g. social posts): lazy-load when scrolled into view.
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) {
+      observer.disconnect();
+      loadEmbed(block, link);
+    }
+  });
+  observer.observe(block);
 }
