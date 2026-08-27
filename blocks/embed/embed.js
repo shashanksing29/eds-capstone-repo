@@ -58,12 +58,22 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
+const embedVideo = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+    <video controls playsinline preload="metadata" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;">
+      <source src="${url.href}" type="video/mp4">
+    </video>
+  </div>`;
+
 const loadEmbed = (block, link, autoplay) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
   }
 
   const EMBEDS_CONFIG = [
+    {
+      match: ['.mp4'],
+      embed: embedVideo,
+    },
     {
       match: ['youtube', 'youtu.be'],
       embed: embedYoutube,
@@ -82,7 +92,8 @@ const loadEmbed = (block, link, autoplay) => {
   const url = new URL(link);
   if (config) {
     block.innerHTML = config.embed(url, autoplay);
-    block.classList = `block embed embed-${config.match[0]}`;
+    const variant = config.match[0].replace(/[^a-z0-9]/gi, '') || 'video';
+    block.classList = `block embed embed-${variant}`;
   } else {
     block.innerHTML = getDefaultEmbed(url);
     block.classList = 'block embed';
