@@ -48,8 +48,19 @@ async function fetchEmployees(path) {
 
 export default async function decorate(block) {
   // Resolve the data source path from a link or plain text cell.
+  // Prefer the visible text when it points at a data sheet, because the EDS
+  // pipeline can auto-link the text and mangle the href (e.g. turning
+  // "/employees.json" into "/employees-json"). Fall back to the link href.
   const link = block.querySelector('a');
-  let dataPath = link ? link.getAttribute('href') : block.textContent.trim();
+  const text = block.textContent.trim();
+  let dataPath;
+  if (text && /\.(json|html)$/i.test(text)) {
+    dataPath = text;
+  } else if (link) {
+    dataPath = link.getAttribute('href');
+  } else {
+    dataPath = text;
+  }
   block.textContent = '';
   if (!dataPath) return;
   try {
