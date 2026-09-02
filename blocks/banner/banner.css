@@ -1,45 +1,164 @@
-.banner {
-  /* default background is blue; authors can override via inline --banner-bg */
-  --banner-default-bg: #3b63fb;
+/*
+ * Banner block.
+ *
+ * Two shapes share this file:
+ *  1. Overlay card (has an authored image) — a rounded card with the image as a
+ *     full-bleed background, a bottom-up dark gradient, and the text overlaid at
+ *     the bottom-left. This is the WKND "dark" call-to-action banner.
+ *  2. Legacy solid banner (no image) — a centred, solid-colour block. Kept so the
+ *     original default/blue authoring keeps working.
+ *
+ * All visual values were extracted from the source final CTA section on
+ * https://www.wknd-trendsetters.site/ via getComputedStyle.
+ */
 
-  background-color: var(--banner-bg, var(--banner-default-bg));
+/* ------------------------------------------------------------------ *
+ * Overlay-card variant (image present)
+ * ------------------------------------------------------------------ */
+
+/* The dark section that hosts the banner is full-bleed black. The
+   `.banner-container` class is added by EDS only to sections holding a banner,
+   so this stays scoped to the block. */
+main .section.dark.banner-container {
+  margin: 0;
+  padding: 64px 0;
+  background-color: #000;
   color: #fff;
-  border-radius: 8px;
-  padding: 48px 24px;
-  text-align: center;
 }
 
-.banner .banner-content {
-  max-width: 1200px;
-  margin: 0 auto;
+.banner {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  align-items: flex-end;
+  min-height: 448px;
+  overflow: hidden;
+  border-radius: 20px;
+  color: #fff;
 }
 
-.banner .banner-image picture,
-.banner .banner-image img {
+/* full-bleed background image */
+.banner .banner-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.banner .banner-image picture {
   display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.banner .banner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* bottom-up dark gradient so the text stays legible */
+.banner:has(.banner-image)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: linear-gradient(to top, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 0%) 60%);
+  pointer-events: none;
+}
+
+.banner .banner-body {
+  position: relative;
+  z-index: 2;
+  max-width: 672px;
+  padding: 40px;
+  text-align: left;
 }
 
 .banner .banner-title {
   margin: 0;
   color: inherit;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-/* dark variant: authored via "banner (dark)" */
-.banner.dark {
-  --banner-default-bg: #131313;
+.banner .banner-body p {
+  margin: 16px 0 0;
+  color: inherit;
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+}
 
+/* the call-to-action link -> white pill button */
+main .banner .banner-body a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  border: 2px solid #fff;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  background-color: #fff;
+  color: #000;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main .banner .banner-body a:any-link:hover,
+main .banner .banner-body a:any-link:focus-visible {
+  background-color: transparent;
   color: #fff;
+  text-decoration: none;
 }
+
+/* the paragraph wrapping the CTA carries the larger gap to the copy above */
+.banner .banner-body p:last-child:has(a) {
+  margin-top: 32px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Legacy solid-colour variant (no image)
+ * ------------------------------------------------------------------ */
+
+.banner:not(:has(.banner-image)) {
+  --banner-default-bg: #3b63fb;
+
+  display: block;
+  min-height: 0;
+  border-radius: 8px;
+  padding: 48px 24px;
+  background-color: var(--banner-bg, var(--banner-default-bg));
+  text-align: center;
+}
+
+.banner:not(:has(.banner-image)).dark {
+  --banner-default-bg: #131313;
+}
+
+.banner:not(:has(.banner-image)) .banner-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ *
+ * Desktop
+ * ------------------------------------------------------------------ */
 
 @media (width >= 900px) {
-  .banner {
-    padding: 64px 32px;
+  main .section.dark.banner-container {
+    padding: 128px 0;
+  }
+
+  .banner .banner-body {
+    padding: 64px;
+  }
+
+  .banner .banner-title {
+    font-size: 56px;
   }
 }

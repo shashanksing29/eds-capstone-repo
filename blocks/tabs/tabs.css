@@ -1,57 +1,191 @@
-.tabs .tabs-list {
+/*
+ * Tabs block — testimonials design migrated from wknd-trendsetters.site
+ * Source layout: active panel on top (large image + quote), tab menu below.
+ * All visual values extracted from source computed styles.
+ */
+
+/* Reorder: panel(s) on top, tab menu below (source order) */
+.tabs {
   display: flex;
-  gap: 0.5ch;
-  max-width: 100%;
-  font-size: var(--body-font-size-xs);
-  overflow-x: auto;
+  flex-direction: column;
 }
 
+.tabs .tabs-panel {
+  order: 1;
+}
+
+.tabs .tabs-list {
+  order: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 24px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* ---------- Active panel ---------- */
+.tabs .tabs-panel[aria-hidden='true'] {
+  display: none;
+}
+
+.tabs .tabs-panel > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.tabs .tabs-panel > div > p {
+  margin: 0;
+}
+
+/* image */
+.tabs .tabs-panel > div > p:first-child {
+  aspect-ratio: 568 / 426;
+}
+
+.tabs .tabs-panel picture,
+.tabs .tabs-panel > div > p:first-child img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* name */
+.tabs .tabs-panel > div > p:nth-child(2) {
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.tabs .tabs-panel > div > p:nth-child(2) strong {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* role */
+.tabs .tabs-panel > div > p:nth-child(3) {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* quote */
+.tabs .tabs-panel > div > p:nth-child(4) {
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  color: var(--text-color);
+}
+
+/* ---------- Tab menu ---------- */
+.tabs .tabs-list button.tabs-tab {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  column-gap: 8px;
+  align-items: center;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  background-color: #efefef;
+  color: var(--text-color);
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.tabs .tabs-list button.tabs-tab p {
+  margin: 0;
+}
+
+/* avatar (first cell, spans both text rows) */
+.tabs .tabs-list button.tabs-tab p:first-child {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.tabs .tabs-list button.tabs-tab p:first-child picture,
+.tabs .tabs-list button.tabs-tab p:first-child img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* name */
+.tabs .tabs-list button.tabs-tab p:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.tabs .tabs-list button.tabs-tab p:nth-child(2) strong {
+  font-weight: 700;
+}
+
+/* role */
+.tabs .tabs-list button.tabs-tab p:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* active tab */
+.tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  border: 1px solid var(--text-color);
+  background-color: var(--light-color);
+  cursor: default;
+}
+
+/* ---------- Desktop ---------- */
 @media (width >= 600px) {
   .tabs .tabs-list {
-    font-size: var(--body-font-size-s);
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (width >= 900px) {
   .tabs .tabs-list {
-    font-size: var(--body-font-size-m);
+    grid-template-columns: repeat(4, 1fr);
   }
-}
 
-.tabs .tabs-list button {
-  flex: 0 0 max-content;
-  margin: 0;
-  border: 1px solid #dadada;
-  border-radius: 0;
-  padding: 0.5em;
-  background-color: var(--light-color);
-  color: initial;
-  font-weight: bold;
-  line-height: unset;
-  text-align: initial;
-  text-overflow: unset;
-  overflow: unset;
-  white-space: unset;
-  transition: background-color 0.2s;
-}
+  .tabs .tabs-panel > div {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto auto auto 1fr;
+    gap: 0 48px;
+    align-items: center;
+  }
 
-.tabs .tabs-list button p {
-  margin: 0;
-}
+  .tabs .tabs-panel > div > p:first-child {
+    grid-column: 1;
+    grid-row: 1 / 6;
+    align-self: center;
+  }
 
-.tabs .tabs-list button[aria-selected='true'] {
-  border-bottom: 1px solid var(--background-color);
-  background-color: var(--background-color);
-  cursor: initial;
-}
+  .tabs .tabs-panel > div > p:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+  }
 
-.tabs .tabs-panel {
-  margin-top: -1px;
-  padding: 24px;
-  border: 1px solid #dadada;
-  overflow: auto;
-}
+  .tabs .tabs-panel > div > p:nth-child(3) {
+    grid-column: 2;
+    grid-row: 3;
+  }
 
-.tabs .tabs-panel[aria-hidden='true'] {
-  display: none;
+  .tabs .tabs-panel > div > p:nth-child(4) {
+    grid-column: 2;
+    grid-row: 4;
+    margin-top: 32px;
+  }
 }
