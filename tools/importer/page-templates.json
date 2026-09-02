@@ -1,4 +1,7 @@
 {
+  "metadata": {
+    "projectType": "da"
+  },
   "templates": [
     {
       "name": "landing-page",
@@ -9,7 +12,125 @@
       ],
       "coverageGaps": [],
       "description": "Marketing landing layout: hero banner followed by stacked feature/content sections and cards",
-      "blocks": []
+      "blocks": [
+        {
+          "name": "section-light-grey",
+          "instances": [
+            "#main-content > header.section.secondary-section",
+            "#main-content > section.section.secondary-section:nth-of-type(2)",
+            "#main-content > section.section.secondary-section:nth-of-type(4)"
+          ],
+          "section": "light-grey"
+        },
+        {
+          "name": "section-dark",
+          "instances": [
+            "#main-content > section.section.inverse-section"
+          ],
+          "section": "dark"
+        },
+        {
+          "name": "hero",
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1)"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-sm",
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md"
+          ]
+        },
+        {
+          "name": "tabs",
+          "instances": [
+            "#main-content > section.section:nth-of-type(3) > div.container > div.tabs-wrapper"
+          ]
+        },
+        {
+          "name": "accordion",
+          "instances": [
+            "#main-content > section.section:nth-of-type(5) div.faq-list"
+          ]
+        },
+        {
+          "name": "banner",
+          "instances": [
+            "#main-content > section.section.inverse-section"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Hero banner",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "light-grey",
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2",
+          "name": "Case-study feature",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": null,
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Photo grid",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
+          "style": "light-grey",
+          "blocks": ["cards"],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center.utility-margin-bottom-8rem"
+          ]
+        },
+        {
+          "id": "rc4",
+          "name": "Testimonial tabs",
+          "selector": "#main-content > section.section:nth-of-type(3)",
+          "style": null,
+          "blocks": ["tabs"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc5",
+          "name": "Latest articles",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(4)",
+          "style": "light-grey",
+          "blocks": ["cards"],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center"
+          ]
+        },
+        {
+          "id": "rc6",
+          "name": "FAQ accordion",
+          "selector": "#main-content > section.section:nth-of-type(5)",
+          "style": null,
+          "blocks": ["accordion"],
+          "defaultContent": [
+            "#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout > div:nth-of-type(1)"
+          ]
+        },
+        {
+          "id": "rc7",
+          "name": "Promo banner",
+          "selector": "#main-content > section.section.inverse-section",
+          "style": "dark",
+          "blocks": ["banner"],
+          "defaultContent": []
+        }
+      ]
     },
     {
       "name": "listing-page",
@@ -20,7 +141,79 @@
       ],
       "coverageGaps": [],
       "description": "Index/hub layout: heading with a grid of teaser cards linking to detail pages",
-      "blocks": []
+      "blocks": [
+        {
+          "name": "section-light-grey",
+          "instances": [
+            "#main-content > header.section.secondary-section",
+            "#articles"
+          ],
+          "section": "light-grey"
+        },
+        {
+          "name": "section-highlight",
+          "instances": [
+            "#main-content > section.section.accent-section"
+          ],
+          "section": "highlight"
+        },
+        {
+          "name": "hero",
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1)"
+          ]
+        },
+        {
+          "name": "article-list",
+          "instances": [
+            "#articles > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Hero banner",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "light-grey",
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2",
+          "name": "Featured article",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": null,
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Latest articles listing",
+          "selector": "#articles",
+          "style": "light-grey",
+          "blocks": ["article-list"],
+          "defaultContent": [
+            "#articles > div.container > div.utility-text-align-center"
+          ]
+        },
+        {
+          "id": "rc4",
+          "name": "Subscribe band",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "highlight",
+          "blocks": [],
+          "defaultContent": [
+            "#main-content > section.section.accent-section > div.container > div.utility-text-align-center"
+          ]
+        }
+      ]
     },
     {
       "name": "blog-post",
@@ -35,7 +228,40 @@
       ],
       "coverageGaps": [],
       "description": "Article layout: title, hero image, and long-form body content with a single main column",
-      "blocks": []
+      "blocks": [
+        {
+          "name": "breadcrumb",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) div.breadcrumbs"
+          ]
+        },
+        {
+          "name": "hero",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1)"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Article header",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": null,
+          "blocks": ["breadcrumb", "hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2",
+          "name": "Article body",
+          "selector": "#main-content > section.section:nth-of-type(2)",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#main-content > section.section:nth-of-type(2) > div.container > div.blog-content"
+          ]
+        }
+      ]
     },
     {
       "name": "faq-page",
@@ -44,7 +270,77 @@
       ],
       "coverageGaps": [],
       "description": "FAQ layout: heading followed by a vertical list of question/answer sections",
-      "blocks": []
+      "blocks": [
+        {
+          "name": "section-light-grey",
+          "instances": [
+            "#main-content > header.section.secondary-section",
+            "#main-content > section.section.secondary-section"
+          ],
+          "section": "light-grey"
+        },
+        {
+          "name": "section-highlight",
+          "instances": [
+            "#main-content > section.section.accent-section"
+          ],
+          "section": "highlight"
+        },
+        {
+          "name": "hero",
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
+        },
+        {
+          "name": "accordion",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.faq-list"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            "#main-content > section.section.secondary-section"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Hero banner",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "light-grey",
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2",
+          "name": "FAQ accordion",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": null,
+          "blocks": ["accordion"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Contact columns",
+          "selector": "#main-content > section.section.secondary-section",
+          "style": "light-grey",
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc4",
+          "name": "Join CTA band",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "highlight",
+          "blocks": [],
+          "defaultContent": [
+            "#main-content > section.section.accent-section > div.container > div.utility-text-align-center"
+          ]
+        }
+      ]
     },
     {
       "name": "article-page",
@@ -53,7 +349,79 @@
       ],
       "coverageGaps": [],
       "description": "Editorial article layout: hero with intro copy and multiple mixed content sections",
-      "blocks": []
+      "blocks": [
+        {
+          "name": "section-light-grey",
+          "instances": [
+            "#main-content > header.section.secondary-section",
+            "#main-content > section.section.secondary-section"
+          ],
+          "section": "light-grey"
+        },
+        {
+          "name": "section-highlight",
+          "instances": [
+            "#main-content > section.section.accent-section"
+          ],
+          "section": "highlight"
+        },
+        {
+          "name": "hero",
+          "instances": [
+            "#main-content > header.section.secondary-section"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "#trends > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            "#main-content > section.section.secondary-section"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Hero banner",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "light-grey",
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2",
+          "name": "Trend cards",
+          "selector": "#trends",
+          "style": null,
+          "blocks": ["cards"],
+          "defaultContent": [
+            "#trends > div.container > div.utility-text-align-center"
+          ]
+        },
+        {
+          "id": "rc3",
+          "name": "Feature columns",
+          "selector": "#main-content > section.section.secondary-section",
+          "style": "light-grey",
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "rc4",
+          "name": "Subscribe band",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "highlight",
+          "blocks": [],
+          "defaultContent": [
+            "#main-content > section.section.accent-section > div.container > div.utility-text-align-center"
+          ]
+        }
+      ]
     }
   ]
 }
