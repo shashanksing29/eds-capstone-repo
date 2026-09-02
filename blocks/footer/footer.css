@@ -1,20 +1,72 @@
+/* Footer — matched to wknd-trendsetters.site (black bg, white text, column links) */
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: #000;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
 }
 
 footer .footer > div {
   margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  max-width: var(--content-max-width, 1200px);
+  padding: 64px 24px 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
 footer .footer p {
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+footer .footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+footer .footer a:hover {
+  color: #ccc;
+  text-decoration: underline;
+}
+
+/* brand block (logo + tagline) */
+footer .footer > div > div:first-child p:first-child a {
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* column headings (Trends / Inspire / Explore) */
+footer .footer h2 {
+  margin: 0 0 16px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #999;
+}
+
+footer .footer ul {
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer .footer li {
+  margin: 0 0 10px;
 }
 
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 40px 32px 24px;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding: 80px 32px 40px;
+    align-items: start;
   }
 }

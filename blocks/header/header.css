@@ -142,10 +142,19 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 /* brand */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
+  flex-basis: auto;
+  font-family: var(--heading-font-family);
+  font-size: 18px;
   font-weight: 700;
   line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header .nav-brand a {
+  color: var(--text-color);
+  text-decoration: none;
 }
 
 header nav .nav-brand img {
@@ -266,7 +275,46 @@ header nav .nav-sections ul > li > ul > li {
   }
 }
 
-/* tools */
+/* tools — Subscribe pill (matches source) */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+header nav .nav-tools p {
+  margin: 0;
+}
+
+/* stylelint-disable no-descending-specificity */
+header nav .nav-tools a,
+header nav .nav-tools a:any-link {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #000;
+  border-radius: 9999px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+header nav .nav-tools a:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* section links: plain black text, medium weight (matches source) */
+header nav .nav-sections a,
+header nav .nav-sections a:any-link {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+header nav .nav-sections a:hover {
+  text-decoration: underline;
 }
