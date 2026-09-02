@@ -1,6 +1,7 @@
 .columns > div {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
 .columns img {
@@ -15,8 +16,12 @@
   order: 0;
 }
 
+/* editorial image treatment — matches source (3:2 crop, 20px radius) */
 .columns > div > .columns-img-col img {
   display: block;
+  border-radius: 20px;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
 }
 
 @media (width >= 900px) {

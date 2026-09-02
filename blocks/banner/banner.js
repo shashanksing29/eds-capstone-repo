@@ -2,22 +2,25 @@
  * Banner block.
  *
  * Content model (authors may omit rows/cells; decorate defensively):
- *   Row 1: image (picture)
- *   Row 2: title text
- *   Row 3 (optional): a background color (any valid CSS color, e.g. "#e30613" or "teal")
+ *   Row 1: image (picture) — used as the full-bleed background of the card
+ *   Row 2: rich content — heading, paragraph(s) and an optional call-to-action link
+ *   Row N (optional): a bare CSS color (e.g. "#e30613" or "teal") for the legacy
+ *           solid-colour banner variant (only applied when no image is authored)
  *
- * When no background color is authored, the banner falls back to the default
- * blue defined in banner.css (--banner-default-bg).
+ * When an image is present the block renders as an overlay card (image behind a
+ * gradient with the text overlaid). When no image is present it falls back to the
+ * legacy solid-colour banner (default blue, overridable via the color cell).
  *
- * The dark variant is triggered by the "banner (dark)" option in authoring and
- * is handled purely in CSS via the `.banner.dark` selector.
+ * The "dark" section option is applied by EDS to the surrounding section
+ * (`.section.dark`) and is handled purely in CSS.
  */
 export default function decorate(block) {
   const rows = [...block.children];
 
   let picture;
-  let title;
   let bgColor;
+  const body = document.createElement('div');
+  body.className = 'banner-body';
 
   rows.forEach((row) => {
     const cell = row.querySelector(':scope > div') || row;
@@ -26,24 +29,27 @@ export default function decorate(block) {
       picture = pic;
       return;
     }
+
     const text = cell.textContent.trim();
-    if (!text) return;
-    if (!title) {
-      title = text;
-    } else if (!bgColor) {
+    if (!text && !cell.children.length) return;
+
+    // A standalone CSS color value authored in its own cell -> background override.
+    if (text && !pic && cell.children.length <= 1 && CSS.supports('color', text)) {
       bgColor = text;
+      return;
     }
+
+    // Preserve the real content elements (headings, paragraphs, buttons) as-is.
+    [...cell.childNodes].forEach((node) => body.append(node));
   });
 
-  // Build the banner content.
-  const content = document.createElement('div');
-  content.className = 'banner-content';
+  block.replaceChildren();
 
   if (picture) {
     const imageWrapper = document.createElement('div');
     imageWrapper.className = 'banner-image';
     imageWrapper.append(picture);
-    content.append(imageWrapper);
+    block.append(imageWrapper);
     // Eager-load the banner image so it never flickers as a broken placeholder,
     // even when the banner is rendered inside a lazily-loaded fragment.
     const img = picture.querySelector('img');
@@ -53,17 +59,11 @@ export default function decorate(block) {
     }
   }
 
-  if (title) {
-    const heading = document.createElement('h2');
-    heading.className = 'banner-title';
-    heading.textContent = title;
-    content.append(heading);
-  }
+  const heading = body.querySelector('h1, h2, h3, h4, h5, h6');
+  if (heading) heading.classList.add('banner-title');
 
-  block.replaceChildren(content);
+  block.append(body);
 
-  // Apply the authored background color; CSS provides the default blue.
-  if (bgColor) {
-    block.style.setProperty('--banner-bg', bgColor);
-  }
+  // Apply the authored background color for the legacy solid-colour variant.
+  if (bgColor) block.style.setProperty('--banner-bg', bgColor);
 }

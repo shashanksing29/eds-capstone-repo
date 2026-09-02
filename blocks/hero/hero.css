@@ -1,37 +1,117 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
+/*
+ * hero block — WKND two-column hero
+ * text (heading + subheading + CTAs) beside a 3-image cluster.
+ * Values extracted from https://www.wknd-trendsetters.site/ computed styles.
+ */
+
+/* section is light-grey (handled by styles.css: background #f5f5f5, padding 40px 0).
+   Add extra vertical rhythm to approach the source 128px band. */
+.hero.block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 16px 0;
 }
 
-.hero {
-  position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+.hero.block p {
+  margin: 0;
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+/* --- image cluster (authored row 1) --- */
+.hero.block > div:first-child > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+.hero.block picture {
+  display: block;
+  line-height: 0;
 }
 
-.hero img {
-  object-fit: cover;
+.hero.block picture img {
   width: 100%;
   height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* --- text column (authored row 2) --- */
+.hero.block > div:last-child > div {
+  max-width: 544px;
+}
+
+.hero.block h1 {
+  margin: 0;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.hero.block h1 + p {
+  margin: 24px 0 0;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+}
+
+/* --- CTA links styled as pill buttons (not auto-decorated in this project) --- */
+.hero.block p:has(> a) {
+  display: inline-block;
+  margin: 32px 16px 0 0;
+}
+
+.hero.block p:has(> a) a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 2px solid var(--text-color);
+  border-radius: 9999px;
+  padding: 12px 24px;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.hero.block p:has(> a) a:hover {
+  text-decoration: none;
+}
+
+/* second CTA = secondary (white fill, dark border) */
+.hero.block p:has(> a):last-of-type a:any-link {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 @media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+  .hero.block {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    padding: 88px 0;
+  }
+
+  /* text column first (left), image cluster second (right) */
+  .hero.block > div:last-child {
+    order: -1;
+  }
+
+  .hero.block h1 {
+    font-size: 56px;
+    letter-spacing: -1.12px;
   }
 }

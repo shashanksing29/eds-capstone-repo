@@ -1,27 +1,116 @@
+/* Cards block — WKND Trendsetters
+ * Handles two shapes from the same block:
+ *  1. Article cards  (image + category pill + date + title link)
+ *  2. Image gallery  (image-only cells; body cell is empty)
+ * Values extracted from source computed styles.
+ */
+
+/* ---- grid (mobile-first) ---- */
 .cards > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
+@media (width >= 600px) {
+  .cards > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---- article card (default) ---- */
 .cards > ul > li {
-  border: 1px solid #dadada;
+  border: 1px solid #e8e8e8;
+  border-radius: 20px;
+  overflow: hidden;
   background-color: var(--background-color);
-}
-
-.cards .cards-card-body {
-  margin: 16px;
 }
 
 .cards .cards-card-image {
   line-height: 0;
 }
 
-.cards > ul > li img {
+.cards .cards-card-image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
+  display: block;
+}
+
+.cards .cards-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+/* category pill (first paragraph) */
+.cards .cards-card-body > p:first-child {
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background-color: #f4fe8b;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* date (second paragraph) */
+.cards .cards-card-body > p:nth-child(2) {
+  margin: 0;
+  color: var(--link-color);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* title */
+.cards .cards-card-body h3 {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.cards .cards-card-body h3 a:any-link {
+  color: var(--text-color);
+}
+
+/* ---- image gallery variant (empty body cell) ---- */
+.cards > ul:has(.cards-card-body:empty) {
+  gap: 12px;
+}
+
+.cards > ul > li:has(.cards-card-body:empty) {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  background-color: transparent;
+}
+
+.cards > ul > li:has(.cards-card-body:empty) .cards-card-image {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cards > ul > li:has(.cards-card-body:empty) .cards-card-image img {
+  aspect-ratio: 1 / 1;
+}
+
+.cards > ul > li .cards-card-body:empty {
+  display: none;
 }
